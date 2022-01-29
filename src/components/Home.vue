@@ -1,9 +1,10 @@
 <template>
-  <Tutorial/>
+  <div>
+    <Tinder-card />
+  </div>
 </template>
-
 <script>
 export default {
-  name: 'IndexPage'
+  
 }
 </script>

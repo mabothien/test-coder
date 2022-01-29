@@ -1,4 +1,6 @@
+import plugins from './src/plugins/index.js'
 export default {
+  srcDir: 'src/',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'js-test',
@@ -21,14 +23,19 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins,
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: [
+    { path: '~/components', pathPrefix: false, pattern: '**/*.vue' },
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/vuetify',
+    ['@nuxtjs/eslint-module', {
+      fix: true
+    }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -37,5 +44,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  
   }
 }
