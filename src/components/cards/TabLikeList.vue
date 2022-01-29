@@ -2,19 +2,19 @@
   <div class="image_list">
     <v-row>
       <v-col
-        v-for="n in 14"
-        :key="n"
+        v-for="item in list"
+        :key="item.id"
         class="d-flex child-flex"
         cols="6"
       >
         <v-img
-          :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+          :src="item.picture"
           aspect-ratio="1"
           class="grey lighten-2"
         >
           <template>
             <div class="image_title">
-              <span>Jame</span>
+              <span>{{ item.title }}. {{ item.firstName }} {{ item.lastName }}</span>
             </div>
           </template>
         </v-img>
@@ -24,7 +24,21 @@
 </template>
 <script>
 export default {
-
+  props: {
+    likeList: {
+      type: Array,
+      default: () => ([])
+    }
+  },
+  data () {
+    return {
+      shouldFetch: false,
+      list: []
+    }
+  },
+  mounted () {
+    this.list = this.likeList
+  }
 }
 </script>
 <style lang="scss">
@@ -33,8 +47,13 @@ export default {
   overflow: auto;
 }
 .image_title {
+  display: block;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.5;
+  padding: 10px;
   position: absolute;
-  bottom: 5px;
+  bottom: 0;
   span {
     color: #fff
   }

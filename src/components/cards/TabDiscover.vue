@@ -10,11 +10,15 @@
       <v-btn icon />
       <v-btn
         fab
+        @click="onDisLike()"
       >
-        <v-icon color="red">mdi-close</v-icon>
+        <v-icon color="red">
+          mdi-close
+        </v-icon>
       </v-btn>
       <v-btn
         fab
+        @click="onLike()"
       >
         <v-icon color="green">
           mdi-heart
@@ -24,7 +28,30 @@
   </v-card>
 </template>
 <script>
-export default {
 
+export default {
+  props: {
+    discoverList: {
+      type: Array,
+      default: () => ([])
+    }
+  },
+  data () {
+    return {
+      shouldFetch: false,
+      list: []
+    }
+  },
+  mounted () {
+    this.list = this.discoverList
+  },
+  methods: {
+    onDisLike () {
+      console.log(1)
+    },
+    onLike () {
+      console.log(2)
+    }
+  }
 }
 </script>

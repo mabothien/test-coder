@@ -2,42 +2,40 @@
   <v-list class="matches_list">
     <v-subheader>Matches:</v-subheader>
     <v-list-item
-      v-for="chat in previous"
-      :key="chat.title"
+      v-for="item in list"
+      :key="item.id"
       class="matches_item"
     >
       <v-list-item-avatar>
         <v-img
-          :alt="`${chat.title} avatar`"
-          :src="chat.avatar"
+          :alt="`${item.firstName} avatar`"
+          :src="item.picture"
         />
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title v-text="chat.title" />
+        <v-list-item-title v-text="item.firstName + item.lastName" />
       </v-list-item-content>
     </v-list-item>
   </v-list>
 </template>
 <script>
 export default {
+  props: {
+    discoverList: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
-      previous: [
-        {
-          title: 'Travis Howard',
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg'
-        },
-        {
-          title: 'Travis Howard',
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg'
-        },
-        {
-          title: 'Travis Howard',
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg'
-        }
-      ]
+      shouldFetch: false,
+      list: []
     }
+  },
+  mounted () {
+    this.list = this.discoverList
+    console.log('like', this.list)
   }
 }
 </script>
