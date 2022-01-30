@@ -31,26 +31,35 @@
 
 export default {
   props: {
-    discoverList: {
+    matches: {
       type: Array,
       default: () => ([])
     }
   },
   data () {
     return {
-      shouldFetch: false,
-      list: []
+      list: [],
+      text: '',
+      timeout: 2000
     }
   },
   mounted () {
-    this.list = this.discoverList
+    this.list = this.matches
   },
   methods: {
     onDisLike () {
-      console.log(1)
+      this.$store.dispatch('snackbar/setSnackbar', {
+        showing: true,
+        color: 'info',
+        text: '<span>Not feeling it?</span><p>Keep discovering</p>'
+      })
     },
     onLike () {
-      console.log(2)
+      this.$store.dispatch('snackbar/setSnackbar', {
+        showing: true,
+        color: 'success',
+        text: '<span>New match!!!</span><p>Send her a message now!</p>'
+      })
     }
   }
 }

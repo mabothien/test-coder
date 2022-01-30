@@ -13,7 +13,7 @@
               v-for="item in items"
               :key="item.tab"
             >
-              <component :is="item.tab" :tab="tab" :like-list="likeList" :discover-list="discoverList" />
+              <component :is="item.tab" :tab="tab" :like-list="likeList" :discover-list="discoverList" :matches="matches" />
             </v-tab-item>
           </v-tabs-items>
           <v-tabs
@@ -42,10 +42,11 @@ export default {
     return {
       likeList: [],
       discoverList: [],
+      matches: [],
       tab: null,
       items: [
-        { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-heart', content: 'Tab 1 Content' },
-        { tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 2 Content' },
+        { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content' },
+        { tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content' },
         { tab: 'TabMatches', tabName: 'Matches', tabIconColor: 'blue', tabIcon: 'mdi-wechat', content: 'Tab 3 Content' }
       ]
     }
@@ -75,8 +76,24 @@ export default {
       })
       this.likeList = data.data
     },
+    async fetchMatches () {
+      const { data } = await this.$axios.request({
+        url: 'https://dummyapi.io/data/v1/user?limit=10',
+        headers: {
+          'app-id': '61f4c60dfc618fc84a5362a3'
+        }
+      })
+      this.matches = data.data
+    },
     onTab (tab) {
       this.tab = tab
+      if (this.tab === 'TabLikeList') {
+        this.fetchLikeList()
+      } else if (this.tab === 'TabMatches') {
+        this.fetchDiscoverList()
+      } else {
+        this.fetchMatches()
+      }
     }
   }
 }

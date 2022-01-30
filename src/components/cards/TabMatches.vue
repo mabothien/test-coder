@@ -29,13 +29,11 @@ export default {
   },
   data () {
     return {
-      shouldFetch: false,
       list: []
     }
   },
   mounted () {
     this.list = this.discoverList
-    console.log('like', this.list)
   }
 }
 </script>
