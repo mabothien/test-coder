@@ -40,7 +40,10 @@ export default {
     return {
       list: [],
       text: '',
-      timeout: 2000
+      timeout: 2000,
+      firstName:"test123",
+      lastName:"sadsad",
+      picture: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/945.jpg"
     }
   },
   mounted () {
@@ -54,7 +57,28 @@ export default {
         text: '<span>Not feeling it?</span><p>Keep discovering</p>'
       })
     },
-    onLike () {
+    async onLike () {
+      const graphqlQuery = {
+         query: `mutation likeUser($firstName: String, $lastName: String, $picture: String) {
+          likeUser( firstName: $firstName, lastName: $lastName, picture: $picture){
+            id
+            firstName
+            lastName
+            picture
+          }
+        }`,
+        variables: {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          picture: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1201.jpg"
+        }
+      }
+      const { data } = await this.$axios.request({
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: graphqlQuery
+      })
+      console.log(data)
       this.$store.dispatch('snackbar/setSnackbar', {
         showing: true,
         color: 'success',

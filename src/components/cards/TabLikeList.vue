@@ -14,7 +14,7 @@
         >
           <template>
             <div class="image_title">
-              <span>{{ item.title }}. {{ item.firstName }} {{ item.lastName }}</span>
+              <span>{{ item.firstName }} {{ item.lastName }}</span>
             </div>
           </template>
         </v-img>

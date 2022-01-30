@@ -33,9 +33,9 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/vuetify',
-    ['@nuxtjs/eslint-module', {
-      fix: true
-    }]
+    // ['@nuxtjs/eslint-module', {
+    //   fix: true
+    // }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -47,5 +47,6 @@ export default {
   build: {
   
   },
-  // serverMiddleware: ['~/server/index'],
+  serverMiddleware: [ { path: "/server", handler: "~/server/index.js" }],
+ 
 }

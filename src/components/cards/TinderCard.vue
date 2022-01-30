@@ -59,31 +59,63 @@ export default {
   },
   methods: {
     async fetchDiscoverList () {
+      // Call api from graplQL
       const { data } = await this.$axios.request({
-        url: 'https://dummyapi.io/data/v1/user?limit=5',
-        headers: {
-          'app-id': '61f4c60dfc618fc84a5362a3'
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: {
+          query: `
+          {
+            users {
+              id,
+              firstName,
+              lastName,
+              picture
+            }
+          }	
+         `
         }
       })
-      this.discoverList = data.data
+      this.discoverList = data.data.users
     },
     async fetchLikeList () {
       const { data } = await this.$axios.request({
-        url: 'https://dummyapi.io/data/v1/user?limit=10',
-        headers: {
-          'app-id': '61f4c60dfc618fc84a5362a3'
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: {
+          query: `
+          {
+            users {
+              id,
+              firstName,
+              lastName,
+              picture
+            }
+          }	
+          `
         }
       })
-      this.likeList = data.data
+      this.likeList = data.data.users
     },
     async fetchMatches () {
+      const graphqlQuery = {
+        query: `
+        {
+          users {
+            id,
+            firstName,
+            lastName,
+            picture
+          }
+        }	
+        `
+      }
       const { data } = await this.$axios.request({
-        url: 'https://dummyapi.io/data/v1/user?limit=10',
-        headers: {
-          'app-id': '61f4c60dfc618fc84a5362a3'
-        }
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: graphqlQuery
       })
-      this.matches = data.data
+      this.matches = data.data.users
     },
     onTab (tab) {
       this.tab = tab
