@@ -14,7 +14,46 @@ const { faker } = require('@faker-js/faker');
 const cors = require('cors')
 
 // Dummy data
-const usersData = [
+const likeUserData = [
+  {
+    id: 1,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  },
+  {
+    id: 2,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  },
+  {
+    id:  3,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  },
+  {
+    id:  4,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  },
+  {
+    id:  5,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  },
+  {
+    id:  6,
+    firstName: () => faker.name.firstName(),
+    lastName: () => faker.name.lastName(),
+    picture: () => faker.image.avatar()    
+  }
+]
+
+const matchesUserData = [
   {
     id: 1,
     firstName: () => faker.name.firstName(),
@@ -74,13 +113,18 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: {type: new GraphQLNonNull(GraphQLInt)}
       },
-      resolve: (parent, args) => usersData.find(user => user.id === args.id)
+      resolve: (parent, args) => likeUserData.find(user => user.id === args.id)
     },
-    users: {
+    likeUsers: {
       type: new GraphQLList(UserType),
-      description: 'list of user',
-      resolve: () => usersData
-    }
+      description: 'list of like user',
+      resolve: () => likeUserData
+    },
+    matchesUser: {
+      type: new GraphQLList(UserType),
+      description: 'list of matches user',
+      resolve: () => matchesUserData
+    },
   })
 })
 const RootMutationType = new GraphQLObjectType({
@@ -97,15 +141,15 @@ const RootMutationType = new GraphQLObjectType({
       },
       resolve: (parent, args) => {
         const user = {
-          id: usersData.length + 1, 
+          id: likeUserData.length + 1, 
           firstName: args.firstName,
           lastName: args.lastName,
           picture: args.picture
         }
-        usersData.push(user)
+        likeUserData.push(user)
         return user
       }
-    }
+    },
   })
 })
 const schema = new GraphQLSchema({
@@ -115,18 +159,23 @@ const schema = new GraphQLSchema({
 
 const getUser = function(args) {
   const id = args.id;
-  return usersData.filter(user => {
+  return likeUserData.filter(user => {
     return user.id === id
   })[0];
 }
 
-const getUsers = function(args) {
-  return usersData
+const getLikeUsers = function(args) {
+  return likeUserData
+}
+
+const getMatchesUsers = function(args) {
+  return likeUserData
 }
 
 const root = {
   user: getUser,
-  users: getUsers
+  likeUsers: getLikeUsers,
+  matchesUsers: getMatchesUsers
 };
 
 const app = express()

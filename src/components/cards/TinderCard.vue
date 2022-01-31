@@ -13,7 +13,7 @@
               v-for="item in items"
               :key="item.tab"
             >
-              <component :is="item.tab" :tab="tab" :like-list="likeList" :discover-list="discoverList" :matches="matches" />
+              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" />
             </v-tab-item>
           </v-tabs-items>
           <v-tabs
@@ -41,7 +41,6 @@ export default {
   data () {
     return {
       likeList: [],
-      discoverList: [],
       matches: [],
       tab: null,
       items: [
@@ -54,11 +53,11 @@ export default {
   async fetch () {
     await Promise.all([
       this.fetchLikeList(),
-      this.fetchDiscoverList()
+      this.fetchMatchesList()
     ])
   },
   methods: {
-    async fetchDiscoverList () {
+    async fetchMatchesList () {
       // Call api from graplQL
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
@@ -66,7 +65,7 @@ export default {
         data: {
           query: `
           {
-            users {
+            matchesUser {
               id,
               firstName,
               lastName,
@@ -76,7 +75,7 @@ export default {
          `
         }
       })
-      this.discoverList = data.data.users
+      this.matches = data.data.matchesUser
     },
     async fetchLikeList () {
       const { data } = await this.$axios.request({
@@ -85,7 +84,7 @@ export default {
         data: {
           query: `
           {
-            users {
+            likeUsers{
               id,
               firstName,
               lastName,
@@ -95,36 +94,14 @@ export default {
           `
         }
       })
-      this.likeList = data.data.users
-    },
-    async fetchMatches () {
-      const graphqlQuery = {
-        query: `
-        {
-          users {
-            id,
-            firstName,
-            lastName,
-            picture
-          }
-        }	
-        `
-      }
-      const { data } = await this.$axios.request({
-        url: 'http://localhost:4000/user',
-        method: 'POST',
-        data: graphqlQuery
-      })
-      this.matches = data.data.users
+      this.likeList = data.data.likeUsers
     },
     onTab (tab) {
       this.tab = tab
       if (this.tab === 'TabLikeList') {
         this.fetchLikeList()
       } else if (this.tab === 'TabMatches') {
-        this.fetchDiscoverList()
-      } else {
-        this.fetchMatches()
+        this.fetchMatchesList()
       }
     }
   }

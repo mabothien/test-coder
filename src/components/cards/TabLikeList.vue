@@ -30,6 +30,11 @@ export default {
       default: () => ([])
     }
   },
+  watch: {
+    likeList (newValue) {
+      this.list = newValue
+    }
+  },
   data () {
     return {
       list: []

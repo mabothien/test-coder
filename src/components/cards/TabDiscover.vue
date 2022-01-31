@@ -28,22 +28,19 @@
   </v-card>
 </template>
 <script>
+const { faker } = require('@faker-js/faker');
 
 export default {
   props: {
-    matches: {
-      type: Array,
-      default: () => ([])
-    }
   },
   data () {
     return {
       list: [],
       text: '',
       timeout: 2000,
-      firstName:"test123",
-      lastName:"sadsad",
-      picture: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/945.jpg"
+      firstName:faker.name.firstName(),
+      lastName:faker.name.lastName(),
+      picture: faker.image.avatar()
     }
   },
   mounted () {
@@ -70,20 +67,21 @@ export default {
         variables: {
           firstName: this.firstName,
           lastName: this.lastName,
-          picture: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1201.jpg"
+          picture: this.picture
         }
       }
-      const { data } = await this.$axios.request({
+      const data = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
         data: graphqlQuery
       })
-      console.log(data)
-      this.$store.dispatch('snackbar/setSnackbar', {
-        showing: true,
-        color: 'success',
-        text: '<span>New match!!!</span><p>Send her a message now!</p>'
-      })
+      if (data.status === 200) {
+        this.$store.dispatch('snackbar/setSnackbar', {
+          showing: true,
+          color: 'success',
+          text: '<span>New match!!!</span><p>Send her a message now!</p>'
+        })
+      }
     }
   }
 }

@@ -22,9 +22,14 @@
 <script>
 export default {
   props: {
-    discoverList: {
+    matches: {
       type: Array,
       default: () => ([])
+    }
+  },
+  watch: {
+    matches (newValue) {
+      this.list = newValue
     }
   },
   data () {
@@ -33,7 +38,7 @@ export default {
     }
   },
   mounted () {
-    this.list = this.discoverList
+    this.list = this.matches
   }
 }
 </script>
