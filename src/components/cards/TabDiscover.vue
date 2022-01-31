@@ -1,11 +1,15 @@
 <template>
-  <v-card>
+  <div>
+    <v-card v-if="user">
     <div class="card">
       <v-img
         height="250"
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        :src="user.picture"
       />
     </div>
+    <v-card-text >
+     {{user.id}} {{user.firstName}} {{user.lastName}}
+    </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn icon />
       <v-btn
@@ -26,48 +30,44 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+  <div class="empty" v-else>empty</div>
+  </div>
 </template>
 <script>
 const { faker } = require('@faker-js/faker');
 
 export default {
   props: {
+    discoverUser: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data () {
     return {
       list: [],
       text: '',
-      timeout: 2000,
-      firstName:faker.name.firstName(),
-      lastName:faker.name.lastName(),
-      picture: faker.image.avatar()
+      user: {},
+    }
+  },
+  watch: {
+    discoverUser (newValue) {
+      this.user = newValue
     }
   },
   mounted () {
-    this.list = this.matches
+    this.user = this.discoverUser
   },
   methods: {
-    onDisLike () {
-      this.$store.dispatch('snackbar/setSnackbar', {
-        showing: true,
-        color: 'info',
-        text: '<span>Not feeling it?</span><p>Keep discovering</p>'
-      })
-    },
-    async onLike () {
+    async onDisLike () {
       const graphqlQuery = {
-         query: `mutation likeUser($firstName: String, $lastName: String, $picture: String) {
-          likeUser( firstName: $firstName, lastName: $lastName, picture: $picture){
+         query: `mutation passUser($id: Int!) {
+          passUser( id: $id){
             id
-            firstName
-            lastName
-            picture
           }
         }`,
         variables: {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          picture: this.picture
+          id: this.user.id,
         }
       }
       const data = await this.$axios.request({
@@ -76,6 +76,38 @@ export default {
         data: graphqlQuery
       })
       if (data.status === 200) {
+        this.$emit('reload')
+        this.$store.dispatch('snackbar/setSnackbar', {
+          showing: true,
+          color: 'info',
+          text: '<span>Not feeling it?</span><p>Keep discovering</p>'
+        })
+      }
+    },
+    async onLike () {
+      const graphqlQuery = {
+         query: `mutation likeUser($id: Int!, $firstName: String, $lastName: String, $picture: String) {
+          likeUser(id: $id, firstName: $firstName, lastName: $lastName, picture: $picture){
+            id
+            firstName
+            lastName
+            picture
+          }
+        }`,
+        variables: {
+          id: this.user.id,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          picture: this.user.picture
+        }
+      }
+      const data = await this.$axios.request({
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: graphqlQuery
+      })
+      if (data.status === 200) {
+        this.$emit('reload')
         this.$store.dispatch('snackbar/setSnackbar', {
           showing: true,
           color: 'success',
@@ -86,3 +118,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.empty {
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+}
+</style>

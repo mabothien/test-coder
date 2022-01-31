@@ -13,7 +13,7 @@
               v-for="item in items"
               :key="item.tab"
             >
-              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" />
+              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" :discoverUser="discoverUser" @reload="reloadDiscover()"/>
             </v-tab-item>
           </v-tabs-items>
           <v-tabs
@@ -42,6 +42,7 @@ export default {
     return {
       likeList: [],
       matches: [],
+      discoverUser: {},
       tab: null,
       items: [
         { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content' },
@@ -53,12 +54,16 @@ export default {
   async fetch () {
     await Promise.all([
       this.fetchLikeList(),
-      this.fetchMatchesList()
+      this.fetchMatchesList(),
+      this.fetchDiscoverList()
     ])
   },
   methods: {
+    async reloadDiscover() {
+      await this.fetchDiscoverList()
+    },
+    // Call api from graplQL
     async fetchMatchesList () {
-      // Call api from graplQL
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
@@ -77,6 +82,27 @@ export default {
       })
       this.matches = data.data.matchesUser
     },
+
+    async fetchDiscoverList () {
+      const { data } = await this.$axios.request({
+        url: 'http://localhost:4000/user',
+        method: 'POST',
+        data: {
+          query: `
+          {
+            user {
+              id,
+              firstName,
+              lastName,
+              picture
+            }
+          }	
+         `
+        }
+      })
+      this.discoverUser = data.data.user
+    },
+
     async fetchLikeList () {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
