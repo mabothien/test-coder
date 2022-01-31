@@ -72,6 +72,7 @@ export default {
           {
             matchesUser {
               id,
+              title,
               firstName,
               lastName,
               picture
@@ -92,6 +93,7 @@ export default {
           {
             user {
               id,
+              title,
               firstName,
               lastName,
               picture
@@ -112,6 +114,7 @@ export default {
           {
             likeUsers{
               id,
+              title,
               firstName,
               lastName,
               picture

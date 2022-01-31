@@ -8,7 +8,7 @@
       />
     </div>
     <v-card-text >
-     {{user.id}} {{user.firstName}} {{user.lastName}}
+     {{user.title}}. {{user.firstName}} {{user.lastName}}
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn icon />
@@ -61,13 +61,13 @@ export default {
   methods: {
     async onDisLike () {
       const graphqlQuery = {
-         query: `mutation passUser($id: Int!) {
+         query: `mutation passUser($id: String!) {
           passUser( id: $id){
             id
           }
         }`,
         variables: {
-          id: this.user.id,
+          id: this.user.id.toString(),
         }
       }
       const data = await this.$axios.request({
@@ -86,16 +86,18 @@ export default {
     },
     async onLike () {
       const graphqlQuery = {
-         query: `mutation likeUser($id: Int!, $firstName: String, $lastName: String, $picture: String) {
-          likeUser(id: $id, firstName: $firstName, lastName: $lastName, picture: $picture){
-            id
-            firstName
-            lastName
+         query: `mutation likeUser($id: String!, $title: String, $firstName: String, $lastName: String, $picture: String) {
+          likeUser(id: $id, title: $title, firstName: $firstName, lastName: $lastName, picture: $picture){
+            id,
+            title,
+            firstName,
+            lastName,
             picture
           }
         }`,
         variables: {
-          id: this.user.id,
+          id: this.user.id.toString(),
+          title: this.user.title,
           firstName: this.user.firstName,
           lastName: this.user.lastName,
           picture: this.user.picture

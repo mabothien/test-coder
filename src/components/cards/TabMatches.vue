@@ -14,7 +14,7 @@
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title v-text="item.firstName + item.lastName" />
+        <v-list-item-title v-text="item.title + '. ' + item.firstName + item.lastName" />
       </v-list-item-content>
     </v-list-item>
   </v-list>
