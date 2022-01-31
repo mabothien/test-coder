@@ -11,7 +11,6 @@
      {{user.title}}. {{user.firstName}} {{user.lastName}}
     </v-card-text>
     <v-card-actions class="justify-center">
-      <v-btn icon />
       <v-btn
         fab
         @click="onDisLike()"

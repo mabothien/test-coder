@@ -7,7 +7,7 @@ const {
   GraphQLString} = graphql
 const UserType = require("../TypeDefs/UserType");
 
-const discoverList = require('../dummyData/mock.json');
+const discoverList = require('../dummyData/discoverUser.json');
 const likeUserData = require('../dummyData/mock.json');
 const matchesUserData = require('../dummyData/matches.json');
 
@@ -19,6 +19,7 @@ const RootQueryType = new GraphQLObjectType({
       type: UserType,
       description: 'A Single User',
       resolve(obj) {
+        // get random user in list
         const getUser = discoverList[Math.floor(Math.random()*discoverList.length)];
         return getUser
       }
