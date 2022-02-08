@@ -19,7 +19,7 @@ const RootQueryType = new  GraphQLObjectType ({
       type: UserType,
       description: 'A Single User',
       resolve: async () => {
-        return await Users.findOne({"isMatch": false})
+        return await Users.findOne({"isPass": false})
       }
     },
     likeUsers: {
@@ -51,7 +51,7 @@ const RootMutationType = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLString)},
       },
       resolve: async (parent, args) => {
-        return await Users.findOneAndUpdate({id: args.id}, {isMatch: true}, {
+        return await Users.findOneAndUpdate({id: args.id}, {isMatch: true, isPass: true}, {
           new: true, upsert: false
         });
       }
@@ -62,8 +62,10 @@ const RootMutationType = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLString)},
       },
-      resolve: (parent, args) => {
-        return Users.deleteOne({id: args.id})
+      resolve: async (parent, args) => {
+        return await Users.findOneAndUpdate({id: args.id}, {isPass: true}, {
+          new: true, upsert: false
+        });
       }
     },
   })

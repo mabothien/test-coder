@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
   isMatch: {
     type: Boolean,
     required: false
+  },
+  isPass: {
+    type: Boolean,
+    required: false
   }
 })
 

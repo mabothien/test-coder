@@ -43,7 +43,7 @@ export default {
       likeList: [],
       matches: [],
       randomUser: {},
-      tab: null,
+      tab: 1,
       items: [
         { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content' },
         { tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content' },
@@ -96,7 +96,8 @@ export default {
               firstName,
               lastName,
               picture,
-              isMatch
+              isMatch,
+              isPass
             }
           }	
          `

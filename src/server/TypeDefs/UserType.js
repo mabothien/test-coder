@@ -15,6 +15,7 @@ const UserType = new GraphQLObjectType({
     lastName: { type: GraphQLString},
     picture: { type: GraphQLString},
     isMatch: { type: GraphQLBoolean},
+    isPass: { type: GraphQLBoolean},
   })
 })
 
