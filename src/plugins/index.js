@@ -4,6 +4,5 @@ export default [
   },
   {
     src: '~/plugins/axios',
-  },
-  
+  }
 ]

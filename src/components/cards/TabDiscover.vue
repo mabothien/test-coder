@@ -33,11 +33,10 @@
   </div>
 </template>
 <script>
-const { faker } = require('@faker-js/faker');
 
 export default {
   props: {
-    discoverUser: {
+    randomUser: {
       type: Object,
       default: () => ({})
     }
@@ -50,12 +49,12 @@ export default {
     }
   },
   watch: {
-    discoverUser (newValue) {
+    randomUser (newValue) {
       this.user = newValue
     }
   },
   mounted () {
-    this.user = this.discoverUser
+    this.user = this.randomUser
   },
   methods: {
     async onDisLike () {
@@ -66,7 +65,7 @@ export default {
           }
         }`,
         variables: {
-          id: this.user.id.toString(),
+          id: this.user.id
         }
       }
       const data = await this.$axios.request({
@@ -85,21 +84,13 @@ export default {
     },
     async onLike () {
       const graphqlQuery = {
-         query: `mutation likeUser($id: String!, $title: String, $firstName: String, $lastName: String, $picture: String) {
-          likeUser(id: $id, title: $title, firstName: $firstName, lastName: $lastName, picture: $picture){
+         query: `mutation likeUser($id: String!) {
+          likeUser(id: $id){
             id,
-            title,
-            firstName,
-            lastName,
-            picture
           }
         }`,
         variables: {
-          id: this.user.id.toString(),
-          title: this.user.title,
-          firstName: this.user.firstName,
-          lastName: this.user.lastName,
-          picture: this.user.picture
+          id: this.user.id,
         }
       }
       const data = await this.$axios.request({

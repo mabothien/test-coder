@@ -1,36 +1,27 @@
-
-
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const schemas = require('./schemas')
 const cors = require('cors')
-
-const getUser = function(args) {
-  const id = args.id;
-  return likeUserData.filter(user => {
-    return user.id === id
-  })[0];
-}
-
-const getLikeUsers = function(args) {
-  return likeUserData
-}
-
-const getMatchesUsers = function(args) {
-  return likeUserData
-}
-
-const root = {
-  user: getUser,
-  likeUsers: getLikeUsers,
-  matchesUsers: getMatchesUsers
-};
+const { graphqlHTTP } = require('express-graphql');
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const schemas = require('./schemas')
 
 const app = express()
 app.use(cors())
-app.use('/user', graphqlHTTP({
+const uri = "mongodb+srv://long:Mywork4455@tinder-data.zolam.mongodb.net/users?retryWrites=true&w=majority";
+
+mongoose
+  .connect(
+    uri,
+    {
+      useNewUrlParser: true, 
+      useUnifiedTopology: true
+    }
+  )
+  .then()
+  .catch(err => console.log(err));
+
+app.use('/user', bodyParser.json(), graphqlHTTP({
   schema: schemas,
-  rootValue: root,
   graphiql: true
 }))
-app.listen(4000, () => console.log('Now browse to localhost:4000/user'));
+app.listen(4000)

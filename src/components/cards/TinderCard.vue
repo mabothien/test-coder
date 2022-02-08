@@ -13,7 +13,7 @@
               v-for="item in items"
               :key="item.tab"
             >
-              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" :discoverUser="discoverUser" @reload="reloadDiscover()"/>
+              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" :randomUser="randomUser" @reload="reloadDiscover()"/>
             </v-tab-item>
           </v-tabs-items>
           <v-tabs
@@ -42,7 +42,7 @@ export default {
     return {
       likeList: [],
       matches: [],
-      discoverUser: {},
+      randomUser: {},
       tab: null,
       items: [
         { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content' },
@@ -51,16 +51,16 @@ export default {
       ]
     }
   },
-  async fetch () {
-    await Promise.all([
+  async mounted() {
+     await Promise.all([
       this.fetchLikeList(),
       this.fetchMatchesList(),
-      this.fetchDiscoverList()
+      this.fetchDiscoverById()
     ])
   },
   methods: {
     async reloadDiscover() {
-      await this.fetchDiscoverList()
+      await this.fetchDiscoverById()
     },
     // Call api from graplQL
     async fetchMatchesList () {
@@ -71,7 +71,6 @@ export default {
           query: `
           {
             matchesUser {
-              id,
               title,
               firstName,
               lastName,
@@ -84,36 +83,37 @@ export default {
       this.matches = data.data.matchesUser
     },
 
-    async fetchDiscoverList () {
+    async fetchDiscoverById () {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
         data: {
           query: `
           {
-            user {
+            randomUser {
               id,
               title,
               firstName,
               lastName,
-              picture
+              picture,
+              isMatch
             }
           }	
          `
         }
       })
-      this.discoverUser = data.data.user
+      this.randomUser = data.data.randomUser
     },
 
     async fetchLikeList () {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
+       
         data: {
           query: `
           {
             likeUsers{
-              id,
               title,
               firstName,
               lastName,
@@ -131,6 +131,8 @@ export default {
         this.fetchLikeList()
       } else if (this.tab === 'TabMatches') {
         this.fetchMatchesList()
+      } else {
+         this.fetchDiscoverById()
       }
     }
   }

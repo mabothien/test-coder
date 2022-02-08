@@ -29,7 +29,7 @@ export default {
   components: [
     { path: '~/components', pathPrefix: false, pattern: '**/*.vue' },
   ],
-
+  
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/vuetify',
@@ -45,7 +45,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  
+    babel: {
+      presets: ['@nuxt/babel-preset-app']
+    },
   },
   serverMiddleware: [ { path: "/server", handler: "~/server/index.js" }],
  

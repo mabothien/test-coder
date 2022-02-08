@@ -3,20 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nodemon --watch api --exec \"nuxt\"",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxt/babel-preset-app": "^2.15.8",
     "@nuxtjs/axios": "^5.13.6",
-    "core-js": "^3.19.3",
     "cors": "^2.8.5",
     "eslint-plugin-nuxt": "^3.1.0",
     "eslint-plugin-vue": "^8.4.0",
     "express": "^4.17.2",
     "express-graphql": "^0.12.0",
     "graphql": "^16.3.0",
+    "mongoose": "^6.2.0",
     "nuxt": "^2.15.8",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
@@ -24,11 +25,14 @@
     "webpack": "^4.46.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.5",
+    "@babel/runtime-corejs2": "^7.17.0",
     "@mdi/font": "^6.5.95",
     "@nuxtjs/eslint-config": "^8.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/vuetify": "^1.12.3",
-    "eslint": "^8.8.0"
+    "body-parser": "^1.19.1",
+    "core-js": "2",
+    "eslint": "^8.8.0",
+    "nodemon": "^2.0.15"
   }
 }

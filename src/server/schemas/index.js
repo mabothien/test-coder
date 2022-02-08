@@ -4,43 +4,42 @@ const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLNonNull,
+  GraphQLBoolean,
   GraphQLString} = graphql
 const UserType = require("../TypeDefs/UserType");
-
-const discoverList = require('../dummyData/discoverUser.json');
-const likeUserData = require('../dummyData/mock.json');
-const matchesUserData = require('../dummyData/matches.json');
-
-const RootQueryType = new GraphQLObjectType({
+const Users = require('../model/users')
+const Matches = require('../model/matches')
+const ObjectId = require('mongoose').Types.ObjectId; 
+// Define query type
+const RootQueryType = new  GraphQLObjectType ({
   name: 'Query',
   description: 'Root query',
   fields: () => ({
-    user: {
+    randomUser: {
       type: UserType,
       description: 'A Single User',
-      resolve(obj) {
-        // get random user in list
-        const getUser = discoverList[Math.floor(Math.random()*discoverList.length)];
-        return getUser
+      resolve: async () => {
+        return await Users.findOne({"isMatch": false})
       }
-    },
-    discoverList: {
-      type: new GraphQLList(UserType),
-      description: 'list of discover',
-      resolve: () => discoverList
     },
     likeUsers: {
       type: new GraphQLList(UserType),
       description: 'list of like user',
-      resolve: () => likeUserData
+      resolve: async () => {
+        return await Users.find({"isMatch": true})
+      }
     },
     matchesUser: {
       type: new GraphQLList(UserType),
       description: 'list of matches user',
-      resolve: () => matchesUserData
+      resolve: async () => {
+        return await Matches.find({})
+      }
     },
   })
 })
+
+// Define Mutation type
 const RootMutationType = new GraphQLObjectType({
   name: 'Mutation',
   description: 'Root mutation',
@@ -50,24 +49,11 @@ const RootMutationType = new GraphQLObjectType({
       description: 'Like user',
       args: {
         id: { type: new GraphQLNonNull(GraphQLString)},
-        title: {type: GraphQLString},
-        firstName: {type: GraphQLString},
-        lastName: {type: GraphQLString},
-        picture: {type: GraphQLString},
       },
-      resolve: (parent, args) => {
-        const user = {
-          id: args.id,
-          title: args.title,
-          firstName: args.firstName,
-          lastName: args.lastName,
-          picture: args.picture 
-        }
-        const item = discoverList.find(el => el.id === args.id);
-        const indexItem = discoverList.indexOf(item)
-        discoverList.splice(indexItem, 1)
-        likeUserData.push(user)
-        return user
+      resolve: async (parent, args) => {
+        return await Users.findOneAndUpdate({id: args.id}, {isMatch: true}, {
+          new: true, upsert: false
+        });
       }
     },
     passUser: {
@@ -77,13 +63,7 @@ const RootMutationType = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLString)},
       },
       resolve: (parent, args) => {
-        const user = {
-          id: args.id, 
-        }
-        const item = discoverList.find(el => el.id === args.id);
-        const indexItem = discoverList.indexOf(item)
-        discoverList.splice(indexItem, 1)
-        return user
+        return Users.deleteOne({id: args.id})
       }
     },
   })
