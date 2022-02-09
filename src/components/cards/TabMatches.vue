@@ -27,14 +27,14 @@ export default {
       default: () => ([])
     }
   },
-  watch: {
-    matches (newValue) {
-      this.list = newValue
-    }
-  },
   data () {
     return {
       list: []
+    }
+  },
+  watch: {
+    matches (newValue) {
+      this.list = newValue
     }
   },
   mounted () {

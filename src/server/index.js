@@ -16,7 +16,7 @@ mongoose
       useNewUrlParser: true, 
       useUnifiedTopology: true
     }
-  )
+  ) 
   .then()
   .catch(err => console.log(err));
 

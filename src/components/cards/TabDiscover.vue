@@ -1,35 +1,37 @@
 <template>
   <div>
     <v-card v-if="user">
-    <div class="card">
-      <v-img
-        height="250"
-        :src="user.picture"
-      />
+      <div class="card">
+        <v-img
+          height="250"
+          :src="user.picture"
+        />
+      </div>
+      <v-card-text>
+        {{ user.title }}. {{ user.firstName }} {{ user.lastName }}
+      </v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn
+          fab
+          @click="onDisLike()"
+        >
+          <v-icon color="red">
+            mdi-close
+          </v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          @click="onLike()"
+        >
+          <v-icon color="green">
+            mdi-heart
+          </v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <div v-else class="empty">
+      empty
     </div>
-    <v-card-text >
-     {{user.title}}. {{user.firstName}} {{user.lastName}}
-    </v-card-text>
-    <v-card-actions class="justify-center">
-      <v-btn
-        fab
-        @click="onDisLike()"
-      >
-        <v-icon color="red">
-          mdi-close
-        </v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        @click="onLike()"
-      >
-        <v-icon color="green">
-          mdi-heart
-        </v-icon>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-  <div class="empty" v-else>empty</div>
   </div>
 </template>
 <script>
@@ -45,7 +47,7 @@ export default {
     return {
       list: [],
       text: '',
-      user: {},
+      user: {}
     }
   },
   watch: {
@@ -59,7 +61,7 @@ export default {
   methods: {
     async onDisLike () {
       const graphqlQuery = {
-         query: `mutation passUser($id: String!) {
+        query: `mutation passUser($id: String!) {
           passUser( id: $id){
             id
           }
@@ -84,13 +86,13 @@ export default {
     },
     async onLike () {
       const graphqlQuery = {
-         query: `mutation likeUser($id: String!) {
+        query: `mutation likeUser($id: String!) {
           likeUser(id: $id){
             id,
           }
         }`,
         variables: {
-          id: this.user.id,
+          id: this.user.id
         }
       }
       const data = await this.$axios.request({

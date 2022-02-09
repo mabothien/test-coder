@@ -13,7 +13,14 @@
               v-for="item in items"
               :key="item.tab"
             >
-              <component :is="item.tab" :tab="tab" :like-list="likeList" :matches="matches" :randomUser="randomUser" @reload="reloadDiscover()"/>
+              <component
+                :is="item.tab"
+                :tab="tab"
+                :like-list="likeList"
+                :matches="matches"
+                :random-user="randomUser"
+                @reload="reloadDiscover()"
+              />
             </v-tab-item>
           </v-tabs-items>
           <v-tabs
@@ -38,32 +45,38 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       likeList: [],
       matches: [],
       randomUser: {},
       tab: 1,
       items: [
-        { tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content' },
-        { tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content' },
-        { tab: 'TabMatches', tabName: 'Matches', tabIconColor: 'blue', tabIcon: 'mdi-wechat', content: 'Tab 3 Content' }
-      ]
-    }
+        {
+          tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content',
+        },
+        {
+          tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content',
+        },
+        {
+          tab: 'TabMatches', tabName: 'Matches', tabIconColor: 'blue', tabIcon: 'mdi-wechat', content: 'Tab 3 Content',
+        },
+      ],
+    };
   },
   async mounted() {
-     await Promise.all([
+    await Promise.all([
       this.fetchLikeList(),
       this.fetchMatchesList(),
-      this.fetchDiscoverById()
-    ])
+      this.fetchDiscoverById(),
+    ]);
   },
   methods: {
     async reloadDiscover() {
-      await this.fetchDiscoverById()
+      await this.fetchDiscoverById();
     },
     // Call api from graplQL
-    async fetchMatchesList () {
+    async fetchMatchesList() {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
@@ -77,13 +90,13 @@ export default {
               picture
             }
           }	
-         `
-        }
-      })
-      this.matches = data.data.matchesUser
+         `,
+        },
+      });
+      this.matches = data.data.matchesUser;
     },
 
-    async fetchDiscoverById () {
+    async fetchDiscoverById() {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
@@ -100,17 +113,17 @@ export default {
               isPass
             }
           }	
-         `
-        }
-      })
-      this.randomUser = data.data.randomUser
+         `,
+        },
+      });
+      this.randomUser = data.data.randomUser;
     },
 
-    async fetchLikeList () {
+    async fetchLikeList() {
       const { data } = await this.$axios.request({
         url: 'http://localhost:4000/user',
         method: 'POST',
-       
+
         data: {
           query: `
           {
@@ -121,21 +134,21 @@ export default {
               picture
             }
           }	
-          `
-        }
-      })
-      this.likeList = data.data.likeUsers
+          `,
+        },
+      });
+      this.likeList = data.data.likeUsers;
     },
-    onTab (tab) {
-      this.tab = tab
+    onTab(tab) {
+      this.tab = tab;
       if (this.tab === 'TabLikeList') {
-        this.fetchLikeList()
+        this.fetchLikeList();
       } else if (this.tab === 'TabMatches') {
-        this.fetchMatchesList()
+        this.fetchMatchesList();
       } else {
-         this.fetchDiscoverById()
+        this.fetchDiscoverById();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
