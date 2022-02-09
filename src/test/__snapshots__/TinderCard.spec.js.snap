@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TinderCard.vue should do something 1`] = `
+"<div class=\\"container tinder_app\\">
+  <div class=\\"row justify-center no-gutters\\">
+    <div class=\\"col col-6\\">
+      <div class=\\"v-card v-sheet v-sheet--outlined theme--light rounded-0\\">
+        <div class=\\"v-window tinder_content v-item-group theme--light v-tabs-items\\">
+          <div class=\\"v-window__container\\">
+            <transition-stub name=\\"\\">
+              <!---->
+            </transition-stub>
+            <transition-stub name=\\"\\">
+              <div class=\\"v-window-item v-window-item--active\\">
+                <tabdiscover tab=\\"1\\" like-list=\\"\\" matches=\\"\\" random-user=\\"[object Object]\\"></tabdiscover>
+              </div>
+            </transition-stub>
+            <transition-stub name=\\"\\">
+              <!---->
+            </transition-stub>
+          </div>
+        </div>
+        <div class=\\"v-tabs v-tabs--grow theme--light\\">
+          <div role=\\"tablist\\" class=\\"v-item-group theme--light v-slide-group v-tabs-bar v-tabs-bar--is-mobile primary--text\\">
+            <div class=\\"v-slide-group__prev v-slide-group__prev--disabled\\">
+              <transition-stub name=\\"fade-transition\\"></transition-stub>
+            </div>
+            <div class=\\"v-slide-group__wrapper\\">
+              <div class=\\"v-slide-group__content v-tabs-bar__content\\">
+                <div class=\\"v-tabs-slider-wrapper\\" style=\\"transition: none;\\">
+                  <div class=\\"v-tabs-slider\\"></div>
+                </div>
+                <div tabindex=\\"0\\" aria-selected=\\"false\\" role=\\"tab\\" class=\\"tinder_tab v-tab\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mdi mdi-emoticon-kiss-outline theme--light red--text\\"></i> Liked
+                </div>
+                <div tabindex=\\"0\\" aria-selected=\\"true\\" role=\\"tab\\" class=\\"tinder_tab v-tab v-tab--active\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mdi mdi-heart theme--light green--text\\"></i> Discover
+                </div>
+                <div tabindex=\\"0\\" aria-selected=\\"false\\" role=\\"tab\\" class=\\"tinder_tab v-tab\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mdi mdi-wechat theme--light blue--text\\"></i> Matches
+                </div>
+              </div>
+            </div>
+            <div class=\\"v-slide-group__next v-slide-group__next--disabled\\">
+              <transition-stub name=\\"fade-transition\\"></transition-stub>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>"
+`;

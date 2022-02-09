@@ -45,7 +45,7 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       likeList: [],
       matches: [],
@@ -53,35 +53,36 @@ export default {
       tab: 1,
       items: [
         {
-          tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content',
+          tab: 'TabLikeList', tabName: 'Liked', tabIconColor: 'red', tabIcon: 'mdi-emoticon-kiss-outline', content: 'Tab 1 Content'
         },
         {
-          tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content',
+          tab: 'TabDiscover', tabName: 'Discover', tabIconColor: 'green', tabIcon: 'mdi-heart', content: 'Tab 2 Content'
         },
         {
-          tab: 'TabMatches', tabName: 'Matches', tabIconColor: 'blue', tabIcon: 'mdi-wechat', content: 'Tab 3 Content',
-        },
-      ],
-    };
+          tab: 'TabMatches', tabName: 'Matches', tabIconColor: 'blue', tabIcon: 'mdi-wechat', content: 'Tab 3 Content'
+        }
+      ]
+    }
   },
-  async mounted() {
+  async mounted () {
     await Promise.all([
       this.fetchLikeList(),
       this.fetchMatchesList(),
-      this.fetchDiscoverById(),
-    ]);
+      this.fetchDiscoverById()
+    ])
   },
   methods: {
-    async reloadDiscover() {
-      await this.fetchDiscoverById();
+    async reloadDiscover () {
+      await this.fetchDiscoverById()
     },
     // Call api from graplQL
-    async fetchMatchesList() {
-      const { data } = await this.$axios.request({
-        url: 'http://localhost:4000/user',
-        method: 'POST',
-        data: {
-          query: `
+    async fetchMatchesList () {
+      try {
+        const { data } = await this.$axios.request({
+          url: 'http://localhost:4000/user',
+          method: 'POST',
+          data: {
+            query: `
           {
             matchesUser {
               title,
@@ -89,19 +90,23 @@ export default {
               lastName,
               picture
             }
-          }	
-         `,
-        },
-      });
-      this.matches = data.data.matchesUser;
+          }
+         `
+          }
+        })
+        this.matches = data.data.matchesUser
+      } catch (error) {
+        console.log(error)
+      }
     },
 
-    async fetchDiscoverById() {
-      const { data } = await this.$axios.request({
-        url: 'http://localhost:4000/user',
-        method: 'POST',
-        data: {
-          query: `
+    async fetchDiscoverById () {
+      try {
+        const { data } = await this.$axios.request({
+          url: 'http://localhost:4000/user',
+          method: 'POST',
+          data: {
+            query: ` 
           {
             randomUser {
               id,
@@ -112,20 +117,24 @@ export default {
               isMatch,
               isPass
             }
-          }	
-         `,
-        },
-      });
-      this.randomUser = data.data.randomUser;
+          }
+         `
+          }
+        })
+        this.randomUser = data.data.randomUser
+      } catch (error) {
+        console.log(error)
+      }
     },
 
-    async fetchLikeList() {
-      const { data } = await this.$axios.request({
-        url: 'http://localhost:4000/user',
-        method: 'POST',
+    async fetchLikeList () {
+      try {
+        const { data } = await this.$axios.request({
+          url: 'http://localhost:4000/user',
+          method: 'POST',
 
-        data: {
-          query: `
+          data: {
+            query: `
           {
             likeUsers{
               title,
@@ -133,22 +142,26 @@ export default {
               lastName,
               picture
             }
-          }	
-          `,
-        },
-      });
-      this.likeList = data.data.likeUsers;
-    },
-    onTab(tab) {
-      this.tab = tab;
-      if (this.tab === 'TabLikeList') {
-        this.fetchLikeList();
-      } else if (this.tab === 'TabMatches') {
-        this.fetchMatchesList();
-      } else {
-        this.fetchDiscoverById();
+          }
+          `
+          }
+        })
+        this.likeList = data.data.likeUsers
+      } catch (error) {
+        console.log(error)
       }
     },
-  },
-};
+    onTab (tab) {
+      const index = this.items.findIndex(i => i.tab === tab)
+      this.tab = index
+      if (this.tab === 1) {
+        this.fetchLikeList()
+      } else if (this.tab === 2) {
+        this.fetchMatchesList()
+      } else {
+        this.fetchDiscoverById()
+      }
+    }
+  }
+}
 </script>

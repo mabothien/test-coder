@@ -23,6 +23,5 @@ const matchesSchema = new mongoose.Schema({
   }
 })
 
-    
-const Matches = mongoose.model( 'Matches', matchesSchema);
+const Matches = mongoose.model('Matches', matchesSchema)
 module.exports = Matches

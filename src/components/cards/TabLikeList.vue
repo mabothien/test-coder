@@ -27,23 +27,23 @@ export default {
   props: {
     likeList: {
       type: Array,
-      default: () => ([]),
-    },
+      default: () => ([])
+    }
   },
-  data() {
+  data () {
     return {
-      list: [],
-    };
+      list: []
+    }
   },
   watch: {
-    likeList(newValue) {
-      this.list = newValue;
-    },
+    likeList (newValue) {
+      this.list = newValue
+    }
   },
-  mounted() {
-    this.list = this.likeList;
-  },
-};
+  mounted () {
+    this.list = this.likeList
+  }
+}
 </script>
 <style lang="scss">
 .image_list {

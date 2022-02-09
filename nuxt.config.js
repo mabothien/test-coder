@@ -27,17 +27,14 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
-    { path: '~/components', pathPrefix: false, pattern: '**/*.vue' },
+    { path: '~/components', pathPrefix: false, pattern: '**/*.vue' }
   ],
-  
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/vuetify',
     ['@nuxtjs/eslint-module']
   ],
-  eslint: {
-    fix: true
-  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -48,8 +45,8 @@ export default {
   build: {
     babel: {
       presets: ['@nuxt/babel-preset-app']
-    },
+    }
   },
-  serverMiddleware: [ { path: "/server", handler: "~/server/index.js" }],
- 
+  serverMiddleware: [{ path: '/server', handler: '~/server/index.js' }]
+
 }

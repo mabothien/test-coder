@@ -1,7 +1,7 @@
 {
-  "editor.codeActionsOnSave": null,
   "eslint.format.enable": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "eslint.run": "onSave",
 }
