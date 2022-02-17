@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>My blog navigation bar here</div>
     <v-app id="inspire">
       <nuxt />
     </v-app>

@@ -1,20 +1,15 @@
 <template>
   <v-list class="matches_list">
     <v-subheader>Matches:</v-subheader>
-    <v-list-item
-      v-for="item in list"
-      :key="item.id"
-      class="matches_item"
-    >
+    <v-list-item v-for="item in list" :key="item.id" class="matches_item">
       <v-list-item-avatar>
-        <v-img
-          :alt="`${item.firstName} avatar`"
-          :src="item.picture"
-        />
+        <v-img :alt="`${item.firstName} avatar`" :src="item.picture" />
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title v-text="item.title + '. ' + item.firstName + item.lastName" />
+        <v-list-item-title
+          v-text="item.title + '. ' + item.firstName + item.lastName"
+        />
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -24,7 +19,7 @@ export default {
   props: {
     matches: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
   data () {

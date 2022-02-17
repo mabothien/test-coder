@@ -7,14 +7,11 @@
         class="d-flex child-flex"
         cols="6"
       >
-        <v-img
-          :src="item.picture"
-          aspect-ratio="1"
-          class="grey lighten-2"
-        >
+        <v-img :src="item.picture" aspect-ratio="1" class="grey lighten-2">
           <template>
             <div class="image_title">
-              <span>{{ item.title }}. {{ item.firstName }} {{ item.lastName }}</span>
+              <span>{{ item.title }}. {{ item.firstName }}
+                {{ item.lastName }}</span>
             </div>
           </template>
         </v-img>
@@ -27,7 +24,7 @@ export default {
   props: {
     likeList: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
   data () {
@@ -59,7 +56,7 @@ export default {
   position: absolute;
   bottom: 0;
   span {
-    color: #fff
+    color: #fff;
   }
 }
 </style>

@@ -58,3 +58,4 @@ More information about the usage of this directory in [the documentation](https:
 This directory contains graphql config file. I used express and graphql
 More information about the usage of this directory in [the documentation](https://graphql.org/graphql-js/running-an-express-graphql-server/).
 
+finance-app
