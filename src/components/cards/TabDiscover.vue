@@ -134,8 +134,8 @@ $distance: 400px;
   margin: auto;
   width: calc(100% - 20px);
   height: calc(100% - 23px - 65px - 47px - 16px);
-  min-width: 300px;
-  max-width: 355px;
+  min-width: 80%;
+  max-width: 80%;
   .tinder_avatar {
     position: absolute;
     width: 100%;

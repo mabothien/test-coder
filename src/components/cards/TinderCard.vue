@@ -1,7 +1,7 @@
 <template>
   <v-container class="tinder_app">
     <v-row no-gutters class="justify-center">
-      <v-col cols="6">
+      <v-col cols="5">
         <v-card class="tinder_card_container" outlined tile>
           <div class="tinder_content tinder_card_wrapper">
             <TabLikeList v-if="tab === 0" :like-list="likeList" />
