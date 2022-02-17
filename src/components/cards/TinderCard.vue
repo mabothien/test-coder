@@ -156,7 +156,7 @@ export default {
       } else if (this.tab === 2) {
         this.fetchMatchesList()
       } else {
-        this.fetchDiscoverById()
+        this.fetchDiscover()
       }
     }
   }
