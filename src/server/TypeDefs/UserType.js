@@ -3,6 +3,7 @@ const {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLBoolean,
+  GraphQLInt,
   GraphQLString
 } = graphql
 
@@ -14,6 +15,7 @@ const UserType = new GraphQLObjectType({
     title: { type: GraphQLString },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
+    age: { type: GraphQLInt },
     picture: { type: GraphQLString },
     isMatch: { type: GraphQLBoolean },
     isPass: { type: GraphQLBoolean }

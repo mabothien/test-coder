@@ -19,7 +19,7 @@
               <v-img class="tinder_image" height="340" :src="user.picture" />
             </div>
             <v-card-text class="user_name">
-              {{ user.title }}. {{ user.firstName }} {{ user.lastName }}
+              {{ user.title }}. {{ user.firstName }} {{ user.lastName }}, {{ user.age }}
             </v-card-text>
           </div>
         </div>

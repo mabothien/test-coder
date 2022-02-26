@@ -110,7 +110,8 @@ export default {
               lastName,
               picture,
               isMatch,
-              isPass
+              isPass,
+              age
             }
           }
          `

@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  age: {
+    type: Number,
+    required: false
+  },
   isMatch: {
     type: Boolean,
     required: false
